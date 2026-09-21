@@ -77,7 +77,6 @@
 
         <div class="categories-nav" id="categories-container">
             <button class="cat-chip active" data-category="all">🔥 Todos</button>
-            <!-- Categorias serão injetadas dinamicamente aqui -->
         </div>
 
         <div class="products-grid" id="products-container">
@@ -111,7 +110,6 @@
                 if (error) throw error;
 
                 const navContainer = document.getElementById('categories-container');
-                // Mantém o botão "Todos" fixo e adiciona o resto do banco
                 let html = '<button class="cat-chip active" data-category="all">🔥 Todos</button>';
                 
                 if (data) {
@@ -122,7 +120,6 @@
                 }
                 navContainer.innerHTML = html;
 
-                // Reatribui os eventos de clique nos botões recém criados
                 document.querySelectorAll('.cat-chip').forEach(button => {
                     button.addEventListener('click', () => {
                         document.querySelectorAll('.cat-chip').forEach(btn => btn.classList.remove('active'));
@@ -173,7 +170,7 @@
                     <div class="product-info">
                         <span class="product-category-tag">${categoriesMap[p.category] || p.category}</span>
                         <h3 class="product-title">${p.title}</h3>
-                        <div class="product-price">R$ ${p.price}</div>
+                        <div class="product-price">${p.price}</div>
                         <a href="${p.affiliate_link}" target="_blank" class="btn-buy">Ver na Loja</a>
                     </div>
                 `;
@@ -181,7 +178,6 @@
             });
         }
 
-        // Inicializa a loja ao carregar a página
         initStore();
     </script>
 </body>
