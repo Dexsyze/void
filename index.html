@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOID DROP | Seleção Especial</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #0b0c10; color: #f3f4f6; min-height: 100vh; display: flex; flex-direction: column; }
+        .announcement-bar { background: linear-gradient(90deg, #ff3b3b, #ff5252); color: #fff; text-align: center; font-size: 11px; font-weight: 700; padding: 8px; letter-spacing: 1px; text-transform: uppercase; }
+        
+        header { background-color: #111318; border-bottom: 1px solid #1a1e29; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
+        .logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-img { height: 34px; width: auto; object-fit: contain; }
+        .logo-text { font-size: 20px; font-weight: 900; letter-spacing: 1.5px; color: #ffffff; }
+        .logo-text span { color: #ff3b3b; }
+        
+        .btn-outline { background: rgba(255, 59, 59, 0.05); border: 1px solid rgba(255, 59, 59, 0.3); color: #ff5252; padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.25s ease; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-outline:hover { background-color: #ff3b3b; color: #fff; border-color: #ff3b3b; box-shadow: 0 0 20px rgba(255, 59, 59, 0.4); }
+        .btn-outline svg { width: 16px; height: 16px; fill: currentColor; }
+
+        main { max-width: 1200px; width: 100%; margin: 0 auto; padding: 50px 20px; flex: 1; display: flex; flex-direction: column; gap: 40px; }
+        
+        .store-hero { text-align: center; display: flex; flex-direction: column; gap: 10px; }
+        .store-hero h1 { font-size: 38px; font-weight: 800; color: #fff; }
+        .store-hero p { color: #8c93a3; font-size: 15px; }
+
+        /* Categorias com scroll horizontal suave no mobile */
+        .categories-nav { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; padding: 4px; }
+        .cat-chip { background-color: #141721; border: 1px solid #1f2433; color: #9ca3af; padding: 11px 22px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+        .cat-chip:hover, .cat-chip.active { background: #ff3b3b; color: #fff; border-color: #ff3b3b; }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+        .product-card { background-color: #141721; border: 1px solid #1f2433; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s; }
+        .product-card img { height: 200px; width: 100%; object-fit: cover; background-color: #181c29; }
+        .product-info { padding: 22px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+        .product-category-tag { font-size: 11px; color: #ff5252; text-transform: uppercase; font-weight: 700; }
+        .product-title { font-size: 16px; font-weight: 700; color: #fff; }
+        .product-price { font-size: 19px; font-weight: 800; color: #34d399; }
+        .btn-buy { background-color: #ff3b3b; color: white; border: none; width: 100%; padding: 13px; border-radius: 10px; font-weight: 700; text-decoration: none; text-align: center; display: block; margin-top: auto; }
+
+        footer { background-color: #111318; border-top: 1px solid #1a1e29; text-align: center; padding: 30px; color: #6b7280; font-size: 13px; margin-top: auto; }
+
+        /* Ajustes responsivos finos para telas menores */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            .store-hero h1 { font-size: 26px; }
+            .categories-nav { justify-content: flex-start; overflow-x: auto; padding-bottom: 10px; flex-wrap: nowrap; }
+            .categories-nav::-webkit-scrollbar { height: 4px; }
+            .categories-nav::-webkit-scrollbar-thumb { background: #1f2433; border-radius: 4px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="announcement-bar">⚡ SELEÇÃO ESPECIAL DE PRODUTOS E OFERTAS</div>
+
+    <header>
+        <a href="#" class="logo-area">
+            <img src="logo.png" alt="Logo VOID" class="logo-img">
+            <div class="logo-text">VOID<span>DROP</span></div>
+        </a>
+        <div class="header-actions">
+            <a href="https://instagram.com/dexsyze/" target="_blank" class="btn-outline">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.79-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                INSTAGRAM
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <div class="store-hero">
+            <h1>Melhores Produtos e Recomendações</h1>
+            <p>Encontre os melhores itens selecionados com acesso direto às lojas parceiras.</p>
+        </div>
+
+        <div class="categories-nav" id="categories-container">
+            <button class="cat-chip active" data-category="all">🔥 Todos</button>
+            <!-- Categorias serão injetadas dinamicamente aqui -->
+        </div>
+
+        <div class="products-grid" id="products-container">
+            <!-- Produtos carregados do Supabase -->
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 VOID DROP. Recomendações e indicações de produtos.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://yupbhymettbbzqjvscrq.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_fs_yruoIGGQJABis8tq9LA_AzmJH0jN';
+        
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let activeCategory = 'all';
+        let allProducts = [];
+        let categoriesMap = {};
+
+        async function initStore() {
+            await loadCategories();
+            await loadProducts();
+        }
+
+        async function loadCategories() {
+            try {
+                const { data, error } = await supabaseClient.from('categories').select('*');
+                if (error) throw error;
+
+                const navContainer = document.getElementById('categories-container');
+                // Mantém o botão "Todos" fixo e adiciona o resto do banco
+                let html = '<button class="cat-chip active" data-category="all">🔥 Todos</button>';
+                
+                if (data) {
+                    data.forEach(cat => {
+                        categoriesMap[cat.slug] = cat.name;
+                        html += `<button class="cat-chip" data-category="${cat.slug}">${cat.name}</button>`;
+                    });
+                }
+                navContainer.innerHTML = html;
+
+                // Reatribui os eventos de clique nos botões recém criados
+                document.querySelectorAll('.cat-chip').forEach(button => {
+                    button.addEventListener('click', () => {
+                        document.querySelectorAll('.cat-chip').forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                        activeCategory = button.getAttribute('data-category');
+                        renderProducts();
+                    });
+                });
+            } catch (err) {
+                console.error("Erro ao carregar categorias:", err);
+            }
+        }
+
+        async function loadProducts() {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '<p style="color: #8c93a3; text-align: center; grid-column: 1/-1;">Carregando produtos...</p>';
+            
+            try {
+                const { data, error } = await supabaseClient.from('products').select('*');
+                if (error) throw error;
+                
+                allProducts = data || [];
+                renderProducts();
+            } catch (error) {
+                console.error("Erro ao carregar produtos:", error);
+                container.innerHTML = '<p style="color: #ff3b3b; text-align: center; grid-column: 1/-1;">Erro ao carregar produtos do banco.</p>';
+            }
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+
+            const filtered = activeCategory === 'all' 
+                ? allProducts 
+                : allProducts.filter(p => p.category === activeCategory);
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<p style="color: #8c93a3; text-align: center; grid-column: 1/-1;">Nenhum produto encontrado nesta categoria.</p>';
+                return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="${p.image_url}" alt="${p.title}">
+                    <div class="product-info">
+                        <span class="product-category-tag">${categoriesMap[p.category] || p.category}</span>
+                        <h3 class="product-title">${p.title}</h3>
+                        <div class="product-price">R$ ${p.price}</div>
+                        <a href="${p.affiliate_link}" target="_blank" class="btn-buy">Ver na Loja</a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Inicializa a loja ao carregar a página
+        initStore();
+    </script>
+</body>
+</html>

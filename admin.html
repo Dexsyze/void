@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOID DROP | Painel Admin Profissional</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #0b0c10; color: #f3f4f6; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 15px; }
+        .box { background: #111318; border: 1px solid #1a1e29; padding: 25px; border-radius: 16px; width: 100%; max-width: 550px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .box-wide { max-width: 800px; }
+        h1 { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 20px; text-align: center; }
+        .form-group { margin-bottom: 15px; display: flex; flex-direction: column; gap: 6px; }
+        label { font-size: 13px; color: #9ca3af; font-weight: 600; }
+        input, select { background: #141721; border: 1px solid #1f2433; color: #fff; padding: 12px; border-radius: 8px; font-size: 14px; outline: none; width: 100%; }
+        input:focus, select:focus { border-color: #ff3b3b; }
+        button { background: #ff3b3b; color: white; border: none; width: 100%; padding: 13px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; margin-top: 10px; }
+        button:hover { background: #e03131; }
+        .hidden { display: none !important; }
+        .msg { font-size: 13px; text-align: center; margin-top: 10px; }
+        
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #1a1e29; padding-bottom: 15px; }
+        .admin-header h2 { font-size: 16px; color: #fff; }
+        
+        .tab-buttons { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
+        .tab-btn { background: #141721; border: 1px solid #1f2433; color: #9ca3af; padding: 10px 12px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 12px; white-space: nowrap; flex: 1; margin: 0; }
+        .tab-btn.active { background: #ff3b3b; color: #fff; border-color: #ff3b3b; }
+        
+        .product-list, .category-list { display: flex; flex-direction: column; gap: 12px; max-height: 380px; overflow-y: auto; padding-right: 5px; }
+        .product-row, .category-row { background: #141721; border: 1px solid #1f2433; padding: 12px 16px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+        .product-row-info { display: flex; align-items: center; gap: 12px; overflow: hidden; }
+        .product-row img { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; background: #181c29; }
+        .product-row-text h4 { font-size: 14px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px; }
+        .product-row-text p { font-size: 12px; color: #34d399; font-weight: 700; }
+        .category-row span { font-size: 14px; color: #fff; font-weight: 600; }
+        
+        .btn-delete { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; width: auto; margin: 0; transition: 0.2s; }
+        .btn-delete:hover { background: #ef4444; color: #fff; }
+
+        @media(max-width: 480px) {
+            body { padding: 10px; }
+            .box { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TELA DE LOGIN -->
+    <div class="box" id="login-box">
+        <h1>🔒 Painel Admin VOID</h1>
+        <div class="form-group">
+            <label>Senha de Acesso</label>
+            <input type="password" id="admin-password" placeholder="Digite sua senha">
+        </div>
+        <button id="btn-login">Entrar</button>
+        <p class="msg" id="login-msg" style="color: #ff3b3b;"></p>
+    </div>
+
+    <!-- TELA DO PAINEL -->
+    <div class="box box-wide hidden" id="admin-box">
+        <div class="admin-header">
+            <h2>⚡ Painel VOID DROP</h2>
+            <button class="btn-delete" id="btn-logout" style="width: auto; margin:0;">Sair</button>
+        </div>
+
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="switchTab('add')">➕ Novo Produto</button>
+            <button class="tab-btn" onclick="switchTab('manage')">📋 Produtos</button>
+            <button class="tab-btn" onclick="switchTab('categories')">📁 Categorias</button>
+        </div>
+
+        <!-- ABA 1: ADICIONAR PRODUTO -->
+        <div id="tab-add">
+            <div class="form-group">
+                <label>Título do Produto</label>
+                <input type="text" id="prod-title" placeholder="Ex: Luva Sim Racing">
+            </div>
+            <div class="form-group">
+                <label>Preço (Ex: 149,90)</label>
+                <input type="text" id="prod-price" placeholder="149,90">
+            </div>
+            <div class="form-group">
+                <label>Categoria</label>
+                <select id="prod-category">
+                    <option value="">Carregando categorias...</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Link da Imagem (URL)</label>
+                <input type="text" id="prod-image" placeholder="Cole o link direto da imagem">
+            </div>
+            <div class="form-group">
+                <label>Link de Afiliado / Compra</label>
+                <input type="text" id="prod-link" placeholder="https://shope.ee/...">
+            </div>
+            <button id="btn-save">Salvar Produto no Site</button>
+            <p class="msg" id="save-msg" style="color: #34d399;"></p>
+        </div>
+
+        <!-- ABA 2: GERENCIAR PRODUTOS -->
+        <div id="tab-manage" class="hidden">
+            <div class="product-list" id="manage-products-container">
+                <p style="color: #8c93a3; text-align: center;">Carregando produtos...</p>
+            </div>
+        </div>
+
+        <!-- ABA 3: GERENCIAR CATEGORIAS -->
+        <div id="tab-categories" class="hidden">
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label>Nome da Nova Categoria</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="cat-name" placeholder="Ex: Periféricos">
+                    <button id="btn-save-cat" style="margin-top:0; width: 140px;">Adicionar</button>
+                </div>
+                <p class="msg" id="cat-msg" style="color: #34d399; text-align: left;"></p>
+            </div>
+            <p style="font-size: 13px; color: #9ca3af; margin-bottom: 10px;">Categorias cadastradas:</p>
+            <div class="category-list" id="manage-categories-container">
+                <p style="color: #8c93a3; text-align: center;">Carregando categorias...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://yupbhymettbbzqjvscrq.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_fs_yruoIGGQJABis8tq9LA_AzmJH0jN';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const SENHA_ADMIN = 'dxsz';
+
+        const loginBox = document.getElementById('login-box');
+        const adminBox = document.getElementById('admin-box');
+
+        if (sessionStorage.getItem('void_admin_logged') === 'true') {
+            loginBox.classList.add('hidden');
+            adminBox.classList.remove('hidden');
+            loadCategoriesForSelect();
+            loadManageProducts();
+        }
+
+        document.getElementById('btn-login').addEventListener('click', () => {
+            const digitada = document.getElementById('admin-password').value;
+            const msg = document.getElementById('login-msg');
+
+            if (digitada === SENHA_ADMIN) {
+                sessionStorage.setItem('void_admin_logged', 'true');
+                loginBox.classList.add('hidden');
+                adminBox.classList.remove('hidden');
+                msg.textContent = '';
+                loadCategoriesForSelect();
+                loadManageProducts();
+            } else {
+                msg.textContent = 'Senha incorreta!';
+            }
+        });
+
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            sessionStorage.removeItem('void_admin_logged');
+            location.reload();
+        });
+
+        function switchTab(tab) {
+            const tabAdd = document.getElementById('tab-add');
+            const tabManage = document.getElementById('tab-manage');
+            const tabCategories = document.getElementById('tab-categories');
+            const buttons = document.querySelectorAll('.tab-btn');
+
+            buttons.forEach(b => b.classList.remove('active'));
+
+            tabAdd.classList.add('hidden');
+            tabManage.classList.add('hidden');
+            tabCategories.classList.add('hidden');
+
+            if (tab === 'add') {
+                tabAdd.classList.remove('hidden');
+                buttons[0].classList.add('active');
+                loadCategoriesForSelect();
+            } else if (tab === 'manage') {
+                tabManage.classList.remove('hidden');
+                buttons[1].classList.add('active');
+                loadManageProducts();
+            } else if (tab === 'categories') {
+                tabCategories.classList.remove('hidden');
+                buttons[2].classList.add('active');
+                loadManageCategories();
+            }
+        }
+
+        // Carregar categorias no Select do formulário
+        async function loadCategoriesForSelect() {
+            const select = document.getElementById('prod-category');
+            try {
+                const { data, error } = await supabaseClient.from('categories').select('*').order('name');
+                if (error) throw error;
+
+                select.innerHTML = '<option value="">Selecione uma categoria</option>';
+                data.forEach(c => {
+                    select.innerHTML += `<option value="${c.slug}">${c.name}</option>`;
+                });
+            } catch (err) {
+                select.innerHTML = '<option value="">Erro ao carregar</option>';
+            }
+        }
+
+        // Salvar Produto
+        document.getElementById('btn-save').addEventListener('click', async () => {
+            const title = document.getElementById('prod-title').value;
+            const price = document.getElementById('prod-price').value;
+            const category = document.getElementById('prod-category').value;
+            const image_url = document.getElementById('prod-image').value;
+            const affiliate_link = document.getElementById('prod-link').value;
+            const saveMsg = document.getElementById('save-msg');
+
+            if (!title || !price || !category || !image_url || !affiliate_link) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+
+            try {
+                const { error } = await supabaseClient
+                    .from('products')
+                    .insert([{ title, price, category, image_url, affiliate_link }]);
+
+                if (error) throw error;
+
+                saveMsg.textContent = 'Produto cadastrado com sucesso!';
+                document.getElementById('prod-title').value = '';
+                document.getElementById('prod-price').value = '';
+                document.getElementById('prod-image').value = '';
+                document.getElementById('prod-link').value = '';
+                setTimeout(() => saveMsg.textContent = '', 3000);
+            } catch (error) {
+                alert('Erro ao salvar: ' + error.message);
+            }
+        });
+
+        // Gerenciar Produtos
+        async function loadManageProducts() {
+            const container = document.getElementById('manage-products-container');
+            container.innerHTML = '<p style="color: #8c93a3; text-align: center;">Carregando...</p>';
+            
+            try {
+                const { data, error } = await supabaseClient.from('products').select('*').order('id', { ascending: false });
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<p style="color: #8c93a3; text-align: center;">Nenhum produto cadastrado.</p>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                data.forEach(p => {
+                    container.innerHTML += `
+                        <div class="product-row">
+                            <div class="product-row-info">
+                                <img src="${p.image_url}" alt="">
+                                <div class="product-row-text">
+                                    <h4>${p.title}</h4>
+                                    <p>R$ ${p.price} <span style="color:#9ca3af; font-size:11px;">(${p.category})</span></p>
+                                </div>
+                            </div>
+                            <button class="btn-delete" onclick="deleteProduct('${p.id}')">Excluir</button>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                container.innerHTML = '<p style="color: #ff3b3b; text-align: center;">Erro ao carregar lista.</p>';
+            }
+        }
+
+        async function deleteProduct(id) {
+            if (!confirm('Deseja remover este produto?')) return;
+            try {
+                const { error } = await supabaseClient.from('products').delete().eq('id', id);
+                if (error) throw error;
+                loadManageProducts();
+            } catch (error) {
+                alert('Erro ao excluir: ' + error.message);
+            }
+        }
+
+        // Gerenciar Categorias
+        async function loadManageCategories() {
+            const container = document.getElementById('manage-categories-container');
+            container.innerHTML = '<p style="color: #8c93a3; text-align: center;">Carregando...</p>';
+            
+            try {
+                const { data, error } = await supabaseClient.from('categories').select('*').order('name');
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<p style="color: #8c93a3; text-align: center;">Nenhuma categoria.</p>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                data.forEach(c => {
+                    container.innerHTML += `
+                        <div class="category-row">
+                            <span>${c.name} <small style="color:#6b7280">(${c.slug})</small></span>
+                            <button class="btn-delete" onclick="deleteCategory('${c.id}')">Excluir</button>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                container.innerHTML = '<p style="color: #ff3b3b; text-align: center;">Erro ao carregar.</p>';
+            }
+        }
+
+        document.getElementById('btn-save-cat').addEventListener('click', async () => {
+            const name = document.getElementById('cat-name').value.trim();
+            const msg = document.getElementById('cat-msg');
+            if (!name) {
+                alert('Digite o nome da categoria');
+                return;
+            }
+
+            // Gera o slug automático (ex: "Jogos & Consoles" vira "jogos-consoles")
+            const slug = name.toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
+
+            try {
+                const { error } = await supabaseClient.from('categories').insert([{ name, slug }]);
+                if (error) throw error;
+
+                msg.textContent = 'Categoria adicionada com sucesso!';
+                document.getElementById('cat-name').value = '';
+                loadManageCategories();
+                setTimeout(() => msg.textContent = '', 3000);
+            } catch (error) {
+                alert('Erro ao adicionar categoria (talvez o slug já exista): ' + error.message);
+            }
+        });
+
+        async function deleteCategory(id) {
+            if (!confirm('Tem certeza? Produtos nessa categoria podem ficar sem filtro correspondente.')) return;
+            try {
+                const { error } = await supabaseClient.from('categories').delete().eq('id', id);
+                if (error) throw error;
+                loadManageCategories();
+            } catch (error) {
+                alert('Erro ao excluir: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
