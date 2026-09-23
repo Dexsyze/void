@@ -8,7 +8,38 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
         body { background-color: #0b0c10; color: #f3f4f6; min-height: 100vh; display: flex; flex-direction: column; }
-        .announcement-bar { background: linear-gradient(90deg, #ff3b3b, #ff5252); color: #fff; text-align: center; font-size: 11px; font-weight: 700; padding: 8px; letter-spacing: 1px; text-transform: uppercase; }
+        
+        /* Letreiro eletrônico deslizante estilo painel eletrônico */
+        .announcement-bar {
+            background: linear-gradient(90deg, #ff3b3b, #ff5252);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 9px 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            display: flex;
+            width: 100%;
+        }
+
+        .announcement-track {
+            display: flex;
+            gap: 80px;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+
+        .announcement-bar:hover .announcement-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
         
         header { background-color: #111318; border-bottom: 1px solid #1a1e29; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
         .logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; }
@@ -54,7 +85,19 @@
 </head>
 <body>
 
-    <div class="announcement-bar">⚡ SELEÇÃO ESPECIAL DE PRODUTOS E OFERTAS</div>
+    <!-- Letreiro eletrônico deslizante -->
+    <div class="announcement-bar">
+        <div class="announcement-track">
+            <span>⚡ SELEÇÃO ESPECIAL DE PRODUTOS E OFERTAS</span>
+            <span>🔄 VITRINE ROTATIVA: Produtos selecionados atualizados a cada 2 ou 3 semanas para você não perder nada!</span>
+            <span>🏷️ SEÇÃO "ATÉ R$ 10": Garanta itens exclusivos de baixo custo antes da próxima renovação!</span>
+            
+            <!-- Bloco duplicado para garantir o loop contínuo sem falhas -->
+            <span>⚡ SELEÇÃO ESPECIAL DE PRODUTOS E OFERTAS</span>
+            <span>🔄 VITRINE ROTATIVA: Produtos selecionados atualizados a cada 2 ou 3 semanas para você não perder nada!</span>
+            <span>🏷️ SEÇÃO "ATÉ R$ 10": Garanta itens exclusivos de baixo custo antes da próxima renovação!</span>
+        </div>
+    </div>
 
     <header>
         <a href="#" class="logo-area">
@@ -77,6 +120,7 @@
 
         <div class="categories-nav" id="categories-container">
             <button class="cat-chip active" data-category="all">🔥 Todos</button>
+            <!-- Categorias serão injetadas dinamicamente aqui -->
         </div>
 
         <div class="products-grid" id="products-container">
@@ -170,7 +214,7 @@
                     <div class="product-info">
                         <span class="product-category-tag">${categoriesMap[p.category] || p.category}</span>
                         <h3 class="product-title">${p.title}</h3>
-                        <div class="product-price">${p.price}</div>
+                        <div class="product-price">R$ ${p.price}</div>
                         <a href="${p.affiliate_link}" target="_blank" class="btn-buy">Ver na Loja</a>
                     </div>
                 `;
@@ -178,6 +222,7 @@
             });
         }
 
+        // Inicializa a loja ao carregar a página
         initStore();
     </script>
 </body>
