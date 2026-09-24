@@ -40,6 +40,7 @@ main{max-width:1240px;width:100%;margin:0 auto;padding:50px 20px 40px;flex:1;dis
 .product-card.highlight-random{border:1px solid #ff3b3b !important;box-shadow:0 0 40px rgba(255,59,59,0.5) !important;transform:scale(1.04) !important}
 .product-card img{height:210px;width:100%;object-fit:contain;padding:16px;background:#0f0f12}
 .product-info{padding:20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.product-category-tag{font-size:10px;color:#ff5252;font-weight:800;margin-bottom:2px;display:block}
 .product-title{font-size:14px;font-weight:600;color:#fff;min-height:38px}
 .product-price{font-size:18px;font-weight:800;color:#34d399}
 .btn-buy{background:#ff3b3b;color:#fff;padding:13px;border-radius:10px;font-weight:700;font-size:12px;text-decoration:none;text-align:center;display:block;margin-top:auto}
@@ -87,9 +88,26 @@ let activeCategory='all'; let allProducts=[]; let categoriesMap={}; let randomHi
 async function initStore(){await loadCategories();await loadProducts();setupObserver();}
 async function loadCategories(){try{const {data}=await supabaseClient.from('categories').select('*');const nav=document.getElementById('categories-container');let html='<button class="cat-chip active" data-category="all" style="background:#ff3b3b;color:#fff;border:1px solid #ff3b3b;padding:11px 22px;border-radius:12px;font-weight:600;cursor:pointer">🔥 Todos</button>';if(data){data.forEach(cat=>{categoriesMap[cat.slug]=cat.name;html+=`<button class="cat-chip" data-category="${cat.slug}" style="background:#141721;border:1px solid #1f2433;color:#9ca3af;padding:11px 22px;border-radius:12px;font-weight:600;cursor:pointer">${cat.name}</button>`;});}nav.innerHTML=html;document.querySelectorAll('.cat-chip').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.cat-chip').forEach(x=>{x.style.background='#141721';x.style.color='#9ca3af'});b.style.background='#ff3b3b';b.style.color='#fff';activeCategory=b.getAttribute('data-category');renderProducts();}));}catch(e){console.error(e);}}
 async function loadProducts(){const container=document.getElementById('products-container');container.innerHTML='<p style="color:#8c93a3;text-align:center;grid-column:1/-1">Carregando...</p>';try{const {data}=await supabaseClient.from('products').select('*');allProducts=data||[];renderProducts();}catch(e){container.innerHTML='<p style="color:#ff3b3b;text-align:center">Erro ao carregar.</p>';}}
-function renderProducts(){const container=document.getElementById('products-container');container.innerHTML='';const filtered=activeCategory==='all'?allProducts:allProducts.filter(p=>p.category===activeCategory);filtered.forEach((p,i)=>{const card=document.createElement('div');card.className='product-card'+(randomHighlighted && randomHighlighted.title===p.title?' highlight-random':'');card.dataset.title=p.title;card.style.transitionDelay=(i*0.06)+'s';card.innerHTML=`<img src="${p.image_url}" alt="${p.title}"><div class="product-info"><span style="font-size:10px;color:#ff5252;font-weight:800">${categoriesMap[p.category]||p.category}</span><div class="product-title">${p.title}</div><div class="product-price">R$ ${p.price}</div><a href="${p.affiliate_link}" target="_blank" class="btn-buy">Ver na Loja →</a></div>`;container.appendChild(card);});setTimeout(setupObserver,50);}
+function renderProducts(){
+  const container=document.getElementById('products-container');
+  container.innerHTML='';
+  const filtered=activeCategory==='all'?allProducts:allProducts.filter(p=>p.category===activeCategory);
+  filtered.forEach((p,i)=>{
+    const card=document.createElement('div');
+    card.className='product-card'+(randomHighlighted && randomHighlighted.title===p.title?' highlight-random':'');
+    card.dataset.title=p.title;
+    card.style.transitionDelay=(i*0.06)+'s';
+    
+    // Limpa qualquer "R$" vindo do banco e exibe apenas um limpo
+    const cleanPrice = p.price ? p.price.toString().replace(/r\$\s?/gi, '').trim() : '0,00';
+
+    card.innerHTML=`<img src="${p.image_url}" alt="${p.title}"><div class="product-info"><span class="product-category-tag">${categoriesMap[p.category]||p.category}</span><div class="product-title">${p.title}</div><div class="product-price">R$ ${cleanPrice}</div><a href="${p.affiliate_link}" target="_blank" class="btn-buy">Ver na Loja →</a></div>`;
+    container.appendChild(card);
+  });
+  setTimeout(setupObserver,50);
+}
 function setupObserver(){const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');obs.unobserve(e.target);}});},{threshold:0.12});document.querySelectorAll('.product-card').forEach(c=>obs.observe(c));}
-function showToast(p){const old=document.querySelector('.random-toast');if(old) old.remove();const t=document.createElement('div');t.className='random-toast';t.innerHTML=`<div style="flex:1"><div style="font-size:11px;font-weight:900;color:#ff7a7a">DROP ALEATÓRIO</div><div style="font-size:13px;color:#fff">🔥 ${p.title} - R$ ${p.price}</div></div><a href="${p.affiliate_link}" target="_blank" style="background:#ff3b3b;color:#fff;padding:9px 14px;border-radius:8px;font-size:12px;font-weight:800;text-decoration:none">Ver oferta →</a><button onclick="this.parentElement.remove()" style="background:rgba(255,255,255,0.08);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer">✕</button>`;document.body.appendChild(t);setTimeout(()=>t.remove(),7000);}
+function showToast(p){const old=document.querySelector('.random-toast');if(old) old.remove();const cleanPrice = p.price ? p.price.toString().replace(/r\$\s?/gi, '').trim() : '0,00';const t=document.createElement('div');t.className='random-toast';t.innerHTML=`<div style="flex:1"><div style="font-size:11px;font-weight:900;color:#ff7a7a">DROP ALEATÓRIO</div><div style="font-size:13px;color:#fff">🔥 ${p.title} - R$ ${cleanPrice}</div></div><a href="${p.affiliate_link}" target="_blank" style="background:#ff3b3b;color:#fff;padding:9px 14px;border-radius:8px;font-size:12px;font-weight:800;text-decoration:none">Ver oferta →</a><button onclick="this.parentElement.remove()" style="background:rgba(255,255,255,0.08);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer">✕</button>`;document.body.appendChild(t);setTimeout(()=>t.remove(),7000);}
 function spawnConfetti(){for(let i=0;i<20;i++){const d=document.createElement('div');d.className='confetti-dot';d.style.left=(40+Math.random()*20)+'%';d.style.top='30%';d.style.animationDuration=(0.8+Math.random()*0.8)+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),2000);}}
 document.getElementById('btn-random')?.addEventListener('click',()=>{if(!allProducts.length){alert('Carregando...');return;}const r=allProducts[Math.floor(Math.random()*allProducts.length)];randomHighlighted=r;renderProducts();document.getElementById('products-container').scrollIntoView({behavior:'smooth'});setTimeout(()=>{const cards=[...document.querySelectorAll('.product-card')];const target=cards.find(c=>c.dataset.title===r.title);if(target){target.scrollIntoView({behavior:'smooth',block:'center'});target.classList.add('highlight-random');}showToast(r);spawnConfetti();},700);});
 document.getElementById('btn-all')?.addEventListener('click',()=>{document.getElementById('products-container').scrollIntoView({behavior:'smooth'});});
