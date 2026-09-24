@@ -1,226 +1,99 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VOID DROP | Seleção Especial</title>
-    <link rel="icon" type="image/png" href="logo.png">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background-color: #0b0c10; color: #f3f4f6; min-height: 100vh; display: flex; flex-direction: column; }
-        
-        .announcement-bar {
-            background: linear-gradient(90deg, #ff3b3b, #ff5252);
-            color: #fff;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 9px 0;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            overflow: hidden;
-            white-space: nowrap;
-            position: relative;
-            display: flex;
-            width: 100%;
-        }
-
-        .announcement-track {
-            display: flex;
-            gap: 80px;
-            width: max-content;
-            animation: marquee 25s linear infinite;
-        }
-
-        .announcement-bar:hover .announcement-track {
-            animation-play-state: paused;
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        
-        header { background-color: #111318; border-bottom: 1px solid #1a1e29; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
-        .logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-img { height: 34px; width: auto; object-fit: contain; }
-        .logo-text { font-size: 20px; font-weight: 900; letter-spacing: 1.5px; color: #ffffff; }
-        .logo-text span { color: #ff3b3b; }
-        
-        .btn-outline { background: rgba(255, 59, 59, 0.05); border: 1px solid rgba(255, 59, 59, 0.3); color: #ff5252; padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.25s ease; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-outline:hover { background-color: #ff3b3b; color: #fff; border-color: #ff3b3b; box-shadow: 0 0 20px rgba(255, 59, 59, 0.4); }
-        .btn-outline svg { width: 16px; height: 16px; fill: currentColor; }
-
-        main { max-width: 1200px; width: 100%; margin: 0 auto; padding: 50px 20px; flex: 1; display: flex; flex-direction: column; gap: 40px; }
-        
-        .store-hero { text-align: center; display: flex; flex-direction: column; gap: 10px; }
-        .store-hero h1 { font-size: 38px; font-weight: 800; color: #fff; }
-        .store-hero p { color: #8c93a3; font-size: 15px; }
-
-        .categories-nav { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; padding: 4px; }
-        .cat-chip { background-color: #141721; border: 1px solid #1f2433; color: #9ca3af; padding: 11px 22px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
-        .cat-chip:hover, .cat-chip.active { background: #ff3b3b; color: #fff; border-color: #ff3b3b; }
-
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-        .product-card { background-color: #141721; border: 1px solid #1f2433; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s; }
-        .product-card img { height: 200px; width: 100%; object-fit: cover; background-color: #181c29; }
-        .product-info { padding: 22px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
-        .product-category-tag { font-size: 11px; color: #ff5252; text-transform: uppercase; font-weight: 700; }
-        .product-title { font-size: 16px; font-weight: 700; color: #fff; }
-        .product-price { font-size: 19px; font-weight: 800; color: #34d399; }
-        .btn-buy { background-color: #ff3b3b; color: white; border: none; width: 100%; padding: 13px; border-radius: 10px; font-weight: 700; text-decoration: none; text-align: center; display: block; margin-top: auto; }
-
-        footer { background-color: #111318; border-top: 1px solid #1a1e29; text-align: center; padding: 30px; color: #6b7280; font-size: 13px; margin-top: auto; }
-
-        @media (max-width: 768px) {
-            header { padding: 15px 20px; }
-            .store-hero h1 { font-size: 26px; }
-            .categories-nav { justify-content: flex-start; overflow-x: auto; padding-bottom: 10px; flex-wrap: nowrap; }
-            .categories-nav::-webkit-scrollbar { height: 4px; }
-            .categories-nav::-webkit-scrollbar-thumb { background: #1f2433; border-radius: 4px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOID DROP | Seleção Especial</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}
+body{background:#08080a;color:#f3f4f6;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;position:relative}
+.bg-grid{position:fixed;inset:0;z-index:-1;opacity:0.35;background-image:linear-gradient(rgba(255,59,59,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,59,59,0.05) 1px, transparent 1px);background-size:60px 60px;animation:gridMove 40s linear infinite}
+@keyframes gridMove{0%{transform:translate(0,0)}100%{transform:translate(60px,60px)}}
+.announcement-bar{background:linear-gradient(90deg,#ff3b3b,#ff5252);color:#fff;font-size:11px;font-weight:700;padding:9px 0;letter-spacing:1px;text-transform:uppercase;overflow:hidden;white-space:nowrap;display:flex;width:100%;z-index:20}
+.announcement-track{display:flex;gap:80px;width:max-content;animation:marquee 25s linear infinite}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+header{background:rgba(17,19,24,0.8);backdrop-filter:blur(16px);border-bottom:1px solid #1a1e29;padding:18px 40px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.logo-area{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-img{height:36px;width:auto;filter:drop-shadow(0 0 8px rgba(255,59,59,0.6));animation:logoFloat 3s ease-in-out infinite}
+@keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.logo-text{font-size:20px;font-weight:900;letter-spacing:1.5px;color:#fff}
+.logo-text span{color:#ff3b3b}
+.btn-outline{background:rgba(255,59,59,0.05);border:1px solid rgba(255,59,59,0.3);color:#ff5252;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.25s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-outline:hover{background:#ff3b3b;color:#fff}
+.hero{position:relative;height:480px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0b0c10}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;filter:brightness(0.4) saturate(1.2)}
+.hero-overlay{position:absolute;inset:0;background:radial-gradient(600px at 50% 0%, rgba(255,59,59,0.18), transparent 70%), linear-gradient(180deg, rgba(8,8,10,0.2), rgba(8,8,10,0.9))}
+.hero-content{position:relative;z-index:2;text-align:center;max-width:700px;padding:20px;display:flex;flex-direction:column;gap:18px;align-items:center}
+.hero-logo{width:180px;height:auto;filter:drop-shadow(0 0 20px rgba(255,59,59,0.8));animation:heroLogoPulse 2.5s ease-in-out infinite}
+@keyframes heroLogoPulse{0%,100%{filter:drop-shadow(0 0 12px rgba(255,59,59,0.6))}50%{filter:drop-shadow(0 0 24px rgba(255,59,59,1))}}
+.hero h1{font-size:42px;font-weight:900;color:#fff;text-transform:uppercase;line-height:1}
+.hero p{color:#a0a8b8;font-size:15px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn-hero-random{background:linear-gradient(90deg,#ff3b3b,#ff5252);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 0 20px rgba(255,59,59,0.4)}
+.btn-hero-secondary{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;padding:14px 22px;border-radius:12px;font-weight:600;font-size:14px;cursor:pointer}
+main{max-width:1240px;width:100%;margin:0 auto;padding:50px 20px 40px;flex:1;display:flex;flex-direction:column;gap:36px}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px}
+.product-card{background:#15151b;border:1px solid #23232d;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:all 0.5s;opacity:0;transform:translateY(26px) scale(0.96)}
+.product-card.in-view{opacity:1;transform:translateY(0) scale(1)}
+.product-card.highlight-random{border:1px solid #ff3b3b !important;box-shadow:0 0 40px rgba(255,59,59,0.5) !important;transform:scale(1.04) !important}
+.product-card img{height:210px;width:100%;object-fit:contain;padding:16px;background:#0f0f12}
+.product-info{padding:20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.product-title{font-size:14px;font-weight:600;color:#fff;min-height:38px}
+.product-price{font-size:18px;font-weight:800;color:#34d399}
+.btn-buy{background:#ff3b3b;color:#fff;padding:13px;border-radius:10px;font-weight:700;font-size:12px;text-decoration:none;text-align:center;display:block;margin-top:auto}
+.random-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:9999;background:#15151b;border:1px solid #ff3b3b;border-radius:14px;padding:16px 18px;display:flex;gap:14px;align-items:center;min-width:320px;box-shadow:0 20px 40px rgba(0,0,0,0.6);animation:toastIn 0.45s}
+@keyframes toastIn{from{transform:translateX(-50%) translateY(80px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
+.confetti-dot{position:fixed;width:6px;height:6px;background:#ff3b3b;border-radius:50%;pointer-events:none;z-index:9998;animation:confettiFall linear forwards}
+@keyframes confettiFall{0%{transform:translateY(-10px) rotate(0deg)}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+footer{background:rgba(17,19,24,0.7);border-top:1px solid #1a1e29;text-align:center;padding:28px;color:#6b7280;font-size:11px;text-transform:uppercase}
+</style>
 </head>
 <body>
-
-    <div class="announcement-bar">
-        <div class="announcement-track">
-            <span>⚡ SELEÇÃO ESPECIAL DE PRODUTOS E OFERTAS</span>
-            <span>🔄 VITRINE ROTATIVA: Produtos selecionados atualizados a cada 2 ou 3 semanas para você não perder nada!</span>
-            <span>🏷️ SEÇÃO "ATÉ R$ 10": Garanta itens exclusivos de baixo custo antes da próxima renovação!</span>
-            
-            <span>⚡ SELEÇÃO ESPECIAL DE PRODUTOS E OFERTAS</span>
-            <span>🔄 VITRINE ROTATIVA: Produtos selecionados atualizados a cada 2 ou 3 semanas para você não perder nada!</span>
-            <span>🏷️ SEÇÃO "ATÉ R$ 10": Garanta itens exclusivos de baixo custo antes da próxima renovação!</span>
-        </div>
-    </div>
-
-    <header>
-        <a href="#" class="logo-area">
-            <img src="logo.png" alt="Logo VOID" class="logo-img">
-            <div class="logo-text">VOID<span>DROP</span></div>
-        </a>
-        <div class="header-actions">
-            <a href="https://instagram.com/dexsyze/" target="_blank" class="btn-outline">
-                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.79-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                INSTAGRAM
-            </a>
-        </div>
-    </header>
-
-    <main>
-        <div class="store-hero">
-            <h1>Melhores Produtos e Recomendações</h1>
-            <p>Encontre os melhores itens selecionados com acesso direto às lojas parceiras.</p>
-        </div>
-
-        <div class="categories-nav" id="categories-container">
-            <button class="cat-chip active" data-category="all">🔥 Todos</button>
-        </div>
-
-        <div class="products-grid" id="products-container">
-        </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 VOID DROP. Recomendações e indicações de produtos.</p>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        const SUPABASE_URL = 'https://yupbhymettbbzqjvscrq.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_fs_yruoIGGQJABis8tq9LA_AzmJH0jN';
-        
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        let activeCategory = 'all';
-        let allProducts = [];
-        let categoriesMap = {};
-
-        async function initStore() {
-            await loadCategories();
-            await loadProducts();
-        }
-
-        async function loadCategories() {
-            try {
-                const { data, error } = await supabaseClient.from('categories').select('*');
-                if (error) throw error;
-
-                const navContainer = document.getElementById('categories-container');
-                let html = '<button class="cat-chip active" data-category="all">🔥 Todos</button>';
-                
-                if (data) {
-                    data.forEach(cat => {
-                        categoriesMap[cat.slug] = cat.name;
-                        html += `<button class="cat-chip" data-category="${cat.slug}">${cat.name}</button>`;
-                    });
-                }
-                navContainer.innerHTML = html;
-
-                document.querySelectorAll('.cat-chip').forEach(button => {
-                    button.addEventListener('click', () => {
-                        document.querySelectorAll('.cat-chip').forEach(btn => btn.classList.remove('active'));
-                        button.classList.add('active');
-                        activeCategory = button.getAttribute('data-category');
-                        renderProducts();
-                    });
-                });
-            } catch (err) {
-                console.error("Erro ao carregar categorias:", err);
-            }
-        }
-
-        async function loadProducts() {
-            const container = document.getElementById('products-container');
-            container.innerHTML = '<p style="color: #8c93a3; text-align: center; grid-column: 1/-1;">Carregando produtos...</p>';
-            
-            try {
-                const { data, error } = await supabaseClient.from('products').select('*');
-                if (error) throw error;
-                
-                allProducts = data || [];
-                renderProducts();
-            } catch (error) {
-                console.error("Erro ao carregar produtos:", error);
-                container.innerHTML = '<p style="color: #ff3b3b; text-align: center; grid-column: 1/-1;">Erro ao carregar produtos do banco.</p>';
-            }
-        }
-
-        function renderProducts() {
-            const container = document.getElementById('products-container');
-            container.innerHTML = '';
-
-            const filtered = activeCategory === 'all' 
-                ? allProducts 
-                : allProducts.filter(p => p.category === activeCategory);
-
-            if (filtered.length === 0) {
-                container.innerHTML = '<p style="color: #8c93a3; text-align: center; grid-column: 1/-1;">Nenhum produto encontrado nesta categoria.</p>';
-                return;
-            }
-
-            filtered.forEach(p => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                let priceText = String(p.price).trim();
-                if (!priceText.toUpperCase().startsWith('R$')) {
-                    priceText = 'R$ ' + priceText;
-                }
-
-                card.innerHTML = `
-                    <img src="${p.image_url}" alt="${p.title}">
-                    <div class="product-info">
-                        <span class="product-category-tag">${categoriesMap[p.category] || p.category}</span>
-                        <h3 class="product-title">${p.title}</h3>
-                        <div class="product-price">${priceText}</div>
-                        <a href="${p.affiliate_link}" target="_blank" class="btn-buy">Ver na Loja</a>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        initStore();
-    </script>
+<div class="bg-grid"></div>
+<div class="announcement-bar"><div class="announcement-track">
+<span>⚡ SELEÇÃO ESPECIAL DE PRODUTOS E OFERTAS</span><span>🔄 VITRINE ROTATIVA: Produtos atualizados a cada 2 ou 3 semanas!</span><span>🏷 SEÇÃO "ATÉ R$ 10": Garanta itens de baixo custo!</span>
+<span>⚡ SELEÇÃO ESPECIAL DE PRODUTOS E OFERTAS</span><span>🔄 VITRINE ROTATIVA: Produtos atualizados a cada 2 ou 3 semanas!</span><span>🏷 SEÇÃO "ATÉ R$ 10": Garanta itens de baixo custo!</span>
+</div></div>
+<header>
+<a href="#" class="logo-area"><img src="logo.png" alt="VOID" class="logo-img"><div class="logo-text">VOID<span>DROP</span></div></a>
+<a href="https://instagram.com/dexsyze/" target="_blank" class="btn-outline">INSTAGRAM</a>
+</header>
+<section class="hero">
+<div class="hero-bg"></div><div class="hero-overlay"></div>
+<div class="hero-content">
+<img src="logo.png" class="hero-logo" alt="VOID">
+<h1>ACHADOS QUE VALEM CADA CENTAVO</h1>
+<p>Tech • Gamer • Gear • Garimpados pra você não cair em cilada</p>
+<div class="hero-actions">
+<button id="btn-random" class="btn-hero-random">🎲 ME SURPREENDA</button>
+<button id="btn-all" class="btn-hero-secondary">Ver tudo ↓</button>
+</div>
+</div>
+</section>
+<main>
+<div style="text-align:center"><h2>MELHORES DROPS & RECOMENDAÇÕES</h2><p style="color:#8c93a3;font-size:14px">Filtramos o hype. Só entra o que vale.</p></div>
+<div id="categories-container" style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap"></div>
+<div class="products-grid" id="products-container"></div>
+</main>
+<footer>© 2026 VOID DROP. Curadoria independente • drops verificados.</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL='https://yupbhymettbbzqjvscrq.supabase.co';
+const SUPABASE_ANON_KEY='sb_publishable_fs_yruoIGGQJABis8tq9LA_AzmJH0jN';
+const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+let activeCategory='all'; let allProducts=[]; let categoriesMap={}; let randomHighlighted=null;
+async function initStore(){await loadCategories();await loadProducts();setupObserver();}
+async function loadCategories(){try{const {data}=await supabaseClient.from('categories').select('*');const nav=document.getElementById('categories-container');let html='<button class="cat-chip active" data-category="all" style="background:#ff3b3b;color:#fff;border:1px solid #ff3b3b;padding:11px 22px;border-radius:12px;font-weight:600;cursor:pointer">🔥 Todos</button>';if(data){data.forEach(cat=>{categoriesMap[cat.slug]=cat.name;html+=`<button class="cat-chip" data-category="${cat.slug}" style="background:#141721;border:1px solid #1f2433;color:#9ca3af;padding:11px 22px;border-radius:12px;font-weight:600;cursor:pointer">${cat.name}</button>`;});}nav.innerHTML=html;document.querySelectorAll('.cat-chip').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.cat-chip').forEach(x=>{x.style.background='#141721';x.style.color='#9ca3af'});b.style.background='#ff3b3b';b.style.color='#fff';activeCategory=b.getAttribute('data-category');renderProducts();}));}catch(e){console.error(e);}}
+async function loadProducts(){const container=document.getElementById('products-container');container.innerHTML='<p style="color:#8c93a3;text-align:center;grid-column:1/-1">Carregando...</p>';try{const {data}=await supabaseClient.from('products').select('*');allProducts=data||[];renderProducts();}catch(e){container.innerHTML='<p style="color:#ff3b3b;text-align:center">Erro ao carregar.</p>';}}
+function renderProducts(){const container=document.getElementById('products-container');container.innerHTML='';const filtered=activeCategory==='all'?allProducts:allProducts.filter(p=>p.category===activeCategory);filtered.forEach((p,i)=>{const card=document.createElement('div');card.className='product-card'+(randomHighlighted && randomHighlighted.title===p.title?' highlight-random':'');card.dataset.title=p.title;card.style.transitionDelay=(i*0.06)+'s';card.innerHTML=`<img src="${p.image_url}" alt="${p.title}"><div class="product-info"><span style="font-size:10px;color:#ff5252;font-weight:800">${categoriesMap[p.category]||p.category}</span><div class="product-title">${p.title}</div><div class="product-price">R$ ${p.price}</div><a href="${p.affiliate_link}" target="_blank" class="btn-buy">Ver na Loja →</a></div>`;container.appendChild(card);});setTimeout(setupObserver,50);}
+function setupObserver(){const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');obs.unobserve(e.target);}});},{threshold:0.12});document.querySelectorAll('.product-card').forEach(c=>obs.observe(c));}
+function showToast(p){const old=document.querySelector('.random-toast');if(old) old.remove();const t=document.createElement('div');t.className='random-toast';t.innerHTML=`<div style="flex:1"><div style="font-size:11px;font-weight:900;color:#ff7a7a">DROP ALEATÓRIO</div><div style="font-size:13px;color:#fff">🔥 ${p.title} - R$ ${p.price}</div></div><a href="${p.affiliate_link}" target="_blank" style="background:#ff3b3b;color:#fff;padding:9px 14px;border-radius:8px;font-size:12px;font-weight:800;text-decoration:none">Ver oferta →</a><button onclick="this.parentElement.remove()" style="background:rgba(255,255,255,0.08);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer">✕</button>`;document.body.appendChild(t);setTimeout(()=>t.remove(),7000);}
+function spawnConfetti(){for(let i=0;i<20;i++){const d=document.createElement('div');d.className='confetti-dot';d.style.left=(40+Math.random()*20)+'%';d.style.top='30%';d.style.animationDuration=(0.8+Math.random()*0.8)+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),2000);}}
+document.getElementById('btn-random')?.addEventListener('click',()=>{if(!allProducts.length){alert('Carregando...');return;}const r=allProducts[Math.floor(Math.random()*allProducts.length)];randomHighlighted=r;renderProducts();document.getElementById('products-container').scrollIntoView({behavior:'smooth'});setTimeout(()=>{const cards=[...document.querySelectorAll('.product-card')];const target=cards.find(c=>c.dataset.title===r.title);if(target){target.scrollIntoView({behavior:'smooth',block:'center'});target.classList.add('highlight-random');}showToast(r);spawnConfetti();},700);});
+document.getElementById('btn-all')?.addEventListener('click',()=>{document.getElementById('products-container').scrollIntoView({behavior:'smooth'});});
+initStore();
+</script>
 </body>
 </html>
