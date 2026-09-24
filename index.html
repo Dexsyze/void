@@ -9,7 +9,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
         body { background-color: #0b0c10; color: #f3f4f6; min-height: 100vh; display: flex; flex-direction: column; }
         
-        /* Letreiro eletrônico deslizante estilo painel eletrônico */
         .announcement-bar {
             background: linear-gradient(90deg, #ff3b3b, #ff5252);
             color: #fff;
@@ -57,7 +56,6 @@
         .store-hero h1 { font-size: 38px; font-weight: 800; color: #fff; }
         .store-hero p { color: #8c93a3; font-size: 15px; }
 
-        /* Categorias com scroll horizontal suave no mobile */
         .categories-nav { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; padding: 4px; }
         .cat-chip { background-color: #141721; border: 1px solid #1f2433; color: #9ca3af; padding: 11px 22px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
         .cat-chip:hover, .cat-chip.active { background: #ff3b3b; color: #fff; border-color: #ff3b3b; }
@@ -73,7 +71,6 @@
 
         footer { background-color: #111318; border-top: 1px solid #1a1e29; text-align: center; padding: 30px; color: #6b7280; font-size: 13px; margin-top: auto; }
 
-        /* Ajustes responsivos finos para telas menores */
         @media (max-width: 768px) {
             header { padding: 15px 20px; }
             .store-hero h1 { font-size: 26px; }
@@ -85,14 +82,12 @@
 </head>
 <body>
 
-    <!-- Letreiro eletrônico deslizante -->
     <div class="announcement-bar">
         <div class="announcement-track">
             <span>⚡ SELEÇÃO ESPECIAL DE PRODUTOS E OFERTAS</span>
             <span>🔄 VITRINE ROTATIVA: Produtos selecionados atualizados a cada 2 ou 3 semanas para você não perder nada!</span>
             <span>🏷️ SEÇÃO "ATÉ R$ 10": Garanta itens exclusivos de baixo custo antes da próxima renovação!</span>
             
-            <!-- Bloco duplicado para garantir o loop contínuo sem falhas -->
             <span>⚡ SELEÇÃO ESPECIAL DE PRODUTOS E OFERTAS</span>
             <span>🔄 VITRINE ROTATIVA: Produtos selecionados atualizados a cada 2 ou 3 semanas para você não perder nada!</span>
             <span>🏷️ SEÇÃO "ATÉ R$ 10": Garanta itens exclusivos de baixo custo antes da próxima renovação!</span>
@@ -120,11 +115,9 @@
 
         <div class="categories-nav" id="categories-container">
             <button class="cat-chip active" data-category="all">🔥 Todos</button>
-            <!-- Categorias serão injetadas dinamicamente aqui -->
         </div>
 
         <div class="products-grid" id="products-container">
-            <!-- Produtos carregados do Supabase -->
         </div>
     </main>
 
@@ -209,12 +202,17 @@
             filtered.forEach(p => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
+                let priceText = String(p.price).trim();
+                if (!priceText.toUpperCase().startsWith('R$')) {
+                    priceText = 'R$ ' + priceText;
+                }
+
                 card.innerHTML = `
                     <img src="${p.image_url}" alt="${p.title}">
                     <div class="product-info">
                         <span class="product-category-tag">${categoriesMap[p.category] || p.category}</span>
                         <h3 class="product-title">${p.title}</h3>
-                        <div class="product-price">R$ ${p.price}</div>
+                        <div class="product-price">${priceText}</div>
                         <a href="${p.affiliate_link}" target="_blank" class="btn-buy">Ver na Loja</a>
                     </div>
                 `;
@@ -222,7 +220,6 @@
             });
         }
 
-        // Inicializa a loja ao carregar a página
         initStore();
     </script>
 </body>
